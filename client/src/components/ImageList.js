@@ -16,7 +16,8 @@ const ImageList = ()=>{
     const elementRef = useRef(null);
 
     const loaderMoreImages =useCallback(()=>{
-        if(imageLoading||imageLoading) return;
+        if(images.length===0||imageLoading) return;
+        console.log('loadmoreimages')
         const lastImageId = images.length>0? images[images.length-1]._id:null;
         setImageUrl(`${isPublic?"":"/users/me"}/images?lastId=${lastImageId}`)
     },[images,imageLoading,isPublic,setImageUrl])
@@ -24,8 +25,6 @@ const ImageList = ()=>{
     useEffect(()=>{
         if(!elementRef.current)return;
         const observer = new IntersectionObserver(([entry])=>{
-            console.log(entry);
-            console.log(`intersection : ${entry.isIntersecting}`);
             if(entry.isIntersecting)loaderMoreImages();
         });
         //IntersectionObserver : 특정 요소가 브라우져 화면에 들어왔는지 여부를 감지(observe)

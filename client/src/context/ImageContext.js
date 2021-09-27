@@ -7,7 +7,7 @@ export const ImageContext = createContext();
 export const ImageProvider = (prop)=>{
     const [images,setImages]=useState([]);
     const [myImages,setMyImages]=useState([]);
-    const [isPublic,setIsPublic]=useState(true);
+    const [isPublic,setIsPublic]=useState(false);
     const [imageUrl,setImageUrl]=useState("/images");
     const [imageLoading,setImageLoading] = useState(false);
     const [imageError,setImageError] = useState(false);
@@ -15,6 +15,7 @@ export const ImageProvider = (prop)=>{
     const pastImageUrlRef = useRef();
     useEffect(()=>{
         if(pastImageUrlRef.current===imageUrl)return ;
+        console.log("imageURL changed")
         setImageLoading(true);
         axios.get(imageUrl)
         .then(result=>{
@@ -48,7 +49,7 @@ export const ImageProvider = (prop)=>{
     return(
         <ImageContext.Provider value={{
             images:isPublic?images:myImages,
-            setImages:isPublic?setImages:setMyImages,
+            setImages,setMyImages,
             isPublic,
             myImages,
             setMyImages,
